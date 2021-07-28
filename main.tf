@@ -16,12 +16,12 @@ provider "aws" {
 
 locals {
   ssh_user         = "ubuntu"
-  key_name         = "key"
-  private_key_path = "key.pem"
+  key_name         = "test"
+  private_key_path = "test.pem"
 }
 
 resource "aws_instance" "nginx" {
-  ami                         = "ami-0dba2cb6798deb6d8"
+  ami                         = "ami-0acd36292794047ab"
   instance_type               = "t2.micro"
   associate_public_ip_address = true
   key_name                    = local.key_name
