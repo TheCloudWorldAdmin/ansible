@@ -2,6 +2,13 @@ provider "aws" {
   region = "us-east-1"
 }
 
+  
+locals {
+  ssh_user         = "ubuntu"
+  key_name         = "test"
+  private_key_path = "test.pem"
+}
+
 resource "aws_instance" "nginx" {
   ami                         = "ami-0acd36292794047ab"
   instance_type               = "t2.micro"
