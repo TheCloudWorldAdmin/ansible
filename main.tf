@@ -26,14 +26,15 @@ resource "aws_instance" "nginx" {
       host        = aws_instance.nginx.public_ip
     }
   }
-  resource "time_sleep" "wait_30_seconds" {
-  depends_on = [aws_instance.nginx]
-
-  create_duration = "500s"
-}
   provisioner "local-exec" {
     command = "ansible-playbook  -i ${aws_instance.nginx.public_ip}, --private-key ${local.private_key_path} nginx.yaml"
   }
+}
+
+ resource "time_sleep" "wait_30_seconds" {
+  depends_on = [aws_instance.nginx]
+
+  create_duration = "500s"
 }
 
 output "nginx_ip" {
