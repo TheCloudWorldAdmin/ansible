@@ -1,23 +1,5 @@
-  
-terraform {
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 3.20"
-    }
-  }
-}
-
-
 provider "aws" {
-  profile = "default"
-  region  = "us-east-1"
-}
-
-locals {
-  ssh_user         = "ubuntu"
-  key_name         = "test"
-  private_key_path = "test.pem"
+  region = "us-east-1"
 }
 
 resource "aws_instance" "nginx" {
