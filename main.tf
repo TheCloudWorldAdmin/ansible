@@ -14,11 +14,15 @@ resource "aws_instance" "nginx" {
   associate_public_ip_address = true
   key_name                    = local.key_name
 
-  # provisioner "remote-exec" {
-  #   inline = ["echo 'Wait until SSH is ready'"]
-
- 
-  # }
+   provisioner "remote-exec" {
+     inline = ["echo 'Wait until SSH is ready'"]
+    connection {
+      type        = "ssh"
+      user        = local.ssh_user
+      private_key = file(local.private_key_path)
+      host        = aws_instance.nginx.public_ip
+    }
+  }
   provisioner "local-exec" {
     command = "ansible-playbook  -i ${aws_instance.nginx.public_ip}, --private-key key.pem nginx.yaml"
   }
