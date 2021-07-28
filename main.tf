@@ -9,6 +9,12 @@ locals {
   private_key_path = "test.pem"
 }
 
+resource "time_sleep" "wait_30_seconds" {
+  depends_on = [aws_instance.nginx]
+
+  create_duration = "500s"
+}
+
 resource "aws_instance" "nginx" {
   ami                         = "ami-0acd36292794047ab"
   instance_type               = "t2.micro"
