@@ -9,11 +9,6 @@ locals {
   private_key_path = "test.pem"
 }
 
-resource "time_sleep" "wait_30_seconds" {
-  depends_on = [aws_instance.nginx]
-
-  create_duration = "500s"
-}
 
 resource "aws_instance" "nginx" {
   ami                         = "ami-0acd36292794047ab"
@@ -31,6 +26,11 @@ resource "aws_instance" "nginx" {
       host        = aws_instance.nginx.public_ip
     }
   }
+  resource "time_sleep" "wait_30_seconds" {
+  depends_on = [aws_instance.nginx]
+
+  create_duration = "500s"
+}
   provisioner "local-exec" {
     command = "ansible-playbook  -i ${aws_instance.nginx.public_ip}, --private-key ${local.private_key_path} nginx.yaml"
   }
