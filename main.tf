@@ -27,7 +27,7 @@ resource "aws_instance" "nginx" {
     }
   }
   provisioner "local-exec" {
-    command = "ansible-playbook  -i ${aws_instance.nginx.public_ip}, --private-key ${local.private_key_path} nginx.yaml"
+    command = "ANSIBLE_HOST_KEY_CHECKING=True ansible-playbook  -i ${aws_instance.nginx.public_ip}, --private-key ${local.private_key_path} nginx.yaml"
   }
 }
 
